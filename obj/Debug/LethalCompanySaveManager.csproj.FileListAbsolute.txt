@@ -1,0 +1,10 @@
+G:\LethalCompanySaveManager\bin\Debug\LethalCompanySaveManager.exe.config
+G:\LethalCompanySaveManager\bin\Debug\LethalCompanySaveManager.exe
+G:\LethalCompanySaveManager\bin\Debug\LethalCompanySaveManager.pdb
+G:\LethalCompanySaveManager\obj\Debug\LethalCompanySaveManager.csproj.AssemblyReference.cache
+G:\LethalCompanySaveManager\obj\Debug\EZAudioSwitcher.Form1.resources
+G:\LethalCompanySaveManager\obj\Debug\LethalCompanySaveManager.Properties.Resources.resources
+G:\LethalCompanySaveManager\obj\Debug\LethalCompanySaveManager.csproj.GenerateResource.cache
+G:\LethalCompanySaveManager\obj\Debug\LethalCompanySaveManager.csproj.CoreCompileInputs.cache
+G:\LethalCompanySaveManager\obj\Debug\LethalCompanySaveManager.exe
+G:\LethalCompanySaveManager\obj\Debug\LethalCompanySaveManager.pdb

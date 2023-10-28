@@ -1,0 +1,10 @@
+G:\EzAudioDeviceSwitch-master\obj\Debug\EZAudioSwitcher.csproj.AssemblyReference.cache
+G:\EzAudioDeviceSwitch-master\obj\Debug\EZAudioSwitcher.Form1.resources
+G:\EzAudioDeviceSwitch-master\obj\Debug\EZAudioSwitcher.Properties.Resources.resources
+G:\EzAudioDeviceSwitch-master\obj\Debug\EZAudioSwitcher.csproj.GenerateResource.cache
+G:\EzAudioDeviceSwitch-master\obj\Debug\EZAudioSwitcher.csproj.CoreCompileInputs.cache
+G:\EzAudioDeviceSwitch-master\bin\Debug\LethalCompanySaveManager.exe.config
+G:\EzAudioDeviceSwitch-master\bin\Debug\LethalCompanySaveManager.exe
+G:\EzAudioDeviceSwitch-master\bin\Debug\LethalCompanySaveManager.pdb
+G:\EzAudioDeviceSwitch-master\obj\Debug\LethalCompanySaveManager.exe
+G:\EzAudioDeviceSwitch-master\obj\Debug\LethalCompanySaveManager.pdb
