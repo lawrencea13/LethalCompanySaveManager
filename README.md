@@ -7,4 +7,4 @@ A quick and easy save manager for the game Lethal Company
 4. Manage up to 20 backups by default.
 
 # Additional Notes
-I looked to see if I could get any more information from the saves so they could be distinguished within the file manager, but didn't see an easy way to do this. I believe the developer does not want us accessing the info in the save games to avoid save game editing, so I will leave it alone for now.
+I plan on adding more information to the selected save on the main screen in the future.
