@@ -4,6 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Web.UI.WebControls.WebParts;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -58,7 +59,9 @@ namespace EZAudioSwitcher
 
 
         // do not edit
+        #region INSECURE
         public static string Password = "lcslime14a5";
+        #endregion
         public bool decryptionStatus = false;
 
 
@@ -100,6 +103,22 @@ namespace EZAudioSwitcher
             // backups drop box
             comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             PopulateBackups();
+
+            //var test = Decrypt(Password, File.ReadAllBytes(GameSavePath + PlayerSave));
+            //File.WriteAllText("testfile.txt", test);
+            //test = str_writeToAttribute(test, "HostSettings_Name", "<color=blue>Survive and </color><color=yellow>Win!</color>");
+            //File.WriteAllBytes(GameSavePath + PlayerSave, Encrypt(Password, test));
+            /*
+            Console.WriteLine(generic_getDataFromSave(test, "PushToTalk"));
+            test = generic_writeToAttribute(test, "PushToTalk", "true");
+            Console.WriteLine(generic_getDataFromSave(test, "PushToTalk"));
+
+            Console.WriteLine();
+
+            Console.WriteLine(generic_getDataFromSave(test, "MasterVolume"));
+            test = generic_writeToAttribute(test, "MasterVolume", "0.2");
+            Console.WriteLine(generic_getDataFromSave(test, "MasterVolume"));
+            */
 
         }
 
@@ -285,6 +304,12 @@ namespace EZAudioSwitcher
 
         private void button5_Click(object sender, EventArgs e)
         {
+            if (decryptionStatus)
+            {
+                // do a message box just in case
+                System.Windows.MessageBox.Show("You are editing this file, please save before you delete.", "Notice", MessageBoxButton.OK);
+                return;
+            }
             string selectedFile = CustomBackupDirectory + comboBox2.SelectedItem;
             if (File.Exists(selectedFile))
             {
@@ -309,25 +334,43 @@ namespace EZAudioSwitcher
 
                 var loadedSave = Decrypt(Password, File.ReadAllBytes(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]));
                 saveLastModified.Text = File.GetLastAccessTime(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]).ToString();
-                saveCreditsLabel.Text = getDataFromSave(loadedSave, Credits);
-                saveQuotaLabel.Text = getDataFromSave(loadedSave, Quota);
+                saveCreditsLabel.Text = int_getDataFromSave(loadedSave, Credits);
+                saveQuotaLabel.Text = int_getDataFromSave(loadedSave, Quota);
             }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var loadedSave = Decrypt(Password, File.ReadAllBytes(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]));
-            saveLastModified.Text = File.GetLastAccessTime(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]).ToString();
-            saveCreditsLabel.Text = getDataFromSave(loadedSave, Credits);
-            saveQuotaLabel.Text = getDataFromSave(loadedSave, Quota);
+            try
+            {
+                var loadedSave = Decrypt(Password, File.ReadAllBytes(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]));
+                saveLastModified.Text = File.GetLastAccessTime(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]).ToString();
+                saveCreditsLabel.Text = int_getDataFromSave(loadedSave, Credits);
+                saveQuotaLabel.Text = int_getDataFromSave(loadedSave, Quota);
+                statusLabel.Text = "Save loaded";
+                statusLabel.ForeColor = System.Drawing.Color.Green;
+            }
+            catch(Exception ex)
+            {
+                // save could not be loaded because it's either corrupted or does not exist
+                using(File.Create(GameSavePath + saveMap[comboBox1.SelectedItem.ToString()]))
+                {
+                    saveLastModified.Text = "No save in slot";
+                    saveCreditsLabel.Text = "No save in slot";
+                    saveQuotaLabel.Text = "No save in slot";
+                    statusLabel.Text = "Error loading save";
+                    statusLabel.ForeColor = System.Drawing.Color.Red;
+
+                }
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             var loadedBackup = Decrypt(Password, File.ReadAllBytes(CustomBackupDirectory + comboBox2.SelectedItem));
             backupLastModified.Text = File.GetLastAccessTime(CustomBackupDirectory + comboBox2.SelectedItem).ToString();
-            backupCreditsLabel.Text = getDataFromSave(loadedBackup, Credits);
-            backupQuotaLabel.Text = getDataFromSave(loadedBackup, Quota);
+            backupCreditsLabel.Text = int_getDataFromSave(loadedBackup, Credits);
+            backupQuotaLabel.Text = int_getDataFromSave(loadedBackup, Quota);
         }
 
         private void statusLabel_Click(object sender, EventArgs e)
@@ -335,7 +378,7 @@ namespace EZAudioSwitcher
 
         }
 
-        private string getDataFromSave(string savedata, string attribute)
+        private string int_getDataFromSave(string savedata, string attribute)
         {
             if (!savedata.Contains(attribute))
             {
@@ -375,7 +418,7 @@ namespace EZAudioSwitcher
             return finalNumberStr;
         }
 
-        private string writeToAttribute(string savedata, string attribute, string newAmount)
+        private string int_writeToAttribute(string savedata, string attribute, string newAmount)
         {
             if (!savedata.Contains(attribute))
             {
@@ -414,8 +457,180 @@ namespace EZAudioSwitcher
             return updatedData;
         }
 
+        private string str_getDataFromSave(string savedata, string attribute)
+        {
+            if (!savedata.Contains(attribute))
+            {
+                return "";
+            }
+            int first = savedata.IndexOf(attribute) + attribute.Length;
+
+            List<Char> termsList = new List<Char>();
+            int foundBreaks = 0;
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (savedata[first + i].ToString() == "\"")
+                {
+                    foundBreaks++;
+                }
+                else
+                {
+                    // when the data is formatted correctly, the value will be in between the 8th and 9th quote
+                    if (foundBreaks == 8)
+                    {
+                        termsList.Add(savedata[first + i]);
+                    }
+                    if (foundBreaks >= 9)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            string finalStr = "";
+
+            foreach (char i in termsList)
+            {
+                finalStr += i.ToString();
+            }
+
+            return finalStr;
+        }
+
+        private string str_writeToAttribute(string savedata, string attribute, string newValue) 
+        {
+            /*
+             * Very similar to the int attribute writing, however it acts a bit strange, not sure if it should be utilized yet
+             * The numbers add up and seem to make sense, however the re-written data appears to be out of order, even though the information is in tact
+             * I'm not sure how this happened as it should only rewrite the var
+             */
+
+            if (!savedata.Contains(attribute))
+            {
+                return "";
+            }
+            int first = savedata.IndexOf(attribute) + attribute.Length;
+
+            List<Char> termsList = new List<Char>();
+            int foundBreaks = 0;
+            int firstChar = 0;
+            bool foundFirstChar = false;
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (savedata[first + i].ToString() == "\"")
+                {
+                    foundBreaks++;
+                }
+                else
+                {
+                    if (foundBreaks == 8)
+                    {
+                        if (!foundFirstChar) { firstChar = first + i; }
+                        foundFirstChar = true;
+                        termsList.Add(savedata[first + i]);
+                    }
+                    if (foundBreaks == 9)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            string tempRemovedData = savedata.Remove(firstChar, termsList.Count);
+            string updatedData = tempRemovedData.Insert(firstChar, newValue);
+
+            return updatedData;
+
+        }
+
+        private string generic_getDataFromSave(string savedata, string attribute) 
+        {
+            if (!savedata.Contains(attribute))
+            {
+                return "";
+            }
+            int first = savedata.IndexOf(attribute) + attribute.Length;
+
+            List<Char> termsList = new List<Char>();
+            int foundBreaks = 0;
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (savedata[first + i].ToString() == ":")
+                {
+                    foundBreaks++;
+                }
+                else
+                {
+                    // when the data is formatted correctly, the value will be in between the 8th and 9th quote
+                    if (foundBreaks == 3)
+                    {
+                        if (savedata[first + i].ToString() == "}") { break; }
+                        termsList.Add(savedata[first + i]);
+                    }
+                }
+            }
+
+            string finalStr = "";
+
+            foreach (char i in termsList)
+            {
+                finalStr += i.ToString();
+            }
+
+            return finalStr;
+        }
+
+        private string generic_writeToAttribute(string savedata, string attribute, string newValue) 
+        {
+            if (!savedata.Contains(attribute))
+            {
+                return "";
+            }
+            int first = savedata.IndexOf(attribute) + attribute.Length;
+
+            List<Char> termsList = new List<Char>();
+            int foundBreaks = 0;
+            int firstChar = 0;
+            bool foundFirstChar = false;
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (savedata[first + i].ToString() == ":")
+                {
+                    foundBreaks++;
+                }
+                else
+                {
+                    // when the data is formatted correctly, the value will be in between the 8th and 9th quote
+                    if (foundBreaks == 3)
+                    {
+                        if(!foundFirstChar)
+                        {
+                            firstChar = first + i;
+                            foundFirstChar = true;
+                        }
+                        if (savedata[first + i].ToString() == "}") { break; }
+                        termsList.Add(savedata[first + i]);
+                    }
+                }
+            }
+
+            string tempRemovedData = savedata.Remove(firstChar, termsList.Count);
+            string updatedData = tempRemovedData.Insert(firstChar, newValue);
+            
+            return updatedData;
+        }
+
+
         private void setEditBoxes(string saveData, bool clear = false)
         {
+            /*
+             * If you use the clear bool, you can set savedata to any string you want
+             */
+
             if (clear)
             {
                 coinCountTextBox.Text = "";
@@ -427,17 +642,18 @@ namespace EZAudioSwitcher
             }
             else
             {
-                coinCountTextBox.Text = getDataFromSave(saveData, Credits);
-                deathCountTextBox.Text = getDataFromSave(saveData, Deaths);
-                planetSeedTextBox.Text = getDataFromSave(saveData, PlanetSeed);
-                deadlineTextBox.Text = getDataFromSave(saveData, Deadline);
-                planetIDTextBox.Text = getDataFromSave(saveData, Planet);
-                quotaTextBox.Text = getDataFromSave(saveData, Quota);
+                coinCountTextBox.Text = int_getDataFromSave(saveData, Credits);
+                deathCountTextBox.Text = int_getDataFromSave(saveData, Deaths);
+                planetSeedTextBox.Text = int_getDataFromSave(saveData, PlanetSeed);
+                deadlineTextBox.Text = int_getDataFromSave(saveData, Deadline);
+                planetIDTextBox.Text = int_getDataFromSave(saveData, Planet);
+                quotaTextBox.Text = int_getDataFromSave(saveData, Quota);
             }
         }
 
         private void setEditBoxesReadOnly(bool readOnly)
         {
+            // update all boxes at once on function call rather than individually
             coinCountTextBox.ReadOnly = readOnly;
             deathCountTextBox.ReadOnly = readOnly;
             planetSeedTextBox.ReadOnly = readOnly;
@@ -450,8 +666,8 @@ namespace EZAudioSwitcher
         {
             if (decryptionStatus)
             {
-                // may be a good idea to do something here before we return
-                // likely unnecessary
+                // do a message box just in case
+                MessageBoxResult confirmChanges = System.Windows.MessageBox.Show("You are already editing this file.", "Notice", MessageBoxButton.OK);
                 return;
             }
             try
@@ -479,12 +695,12 @@ namespace EZAudioSwitcher
         {
 
 
-            currentSaveData = writeToAttribute(currentSaveData, Credits, coinCount);
-            currentSaveData = writeToAttribute(currentSaveData, Deaths, deathCount);
-            currentSaveData = writeToAttribute(currentSaveData, PlanetSeed, seed);
-            currentSaveData = writeToAttribute(currentSaveData, Deadline, timeLeft);
-            currentSaveData = writeToAttribute(currentSaveData, Planet, planetID);
-            currentSaveData = writeToAttribute(currentSaveData, Quota, quotaAmount);
+            currentSaveData = int_writeToAttribute(currentSaveData, Credits, coinCount);
+            currentSaveData = int_writeToAttribute(currentSaveData, Deaths, deathCount);
+            currentSaveData = int_writeToAttribute(currentSaveData, PlanetSeed, seed);
+            currentSaveData = int_writeToAttribute(currentSaveData, Deadline, timeLeft);
+            currentSaveData = int_writeToAttribute(currentSaveData, Planet, planetID);
+            currentSaveData = int_writeToAttribute(currentSaveData, Quota, quotaAmount);
             
             try
             {
@@ -502,7 +718,12 @@ namespace EZAudioSwitcher
             setEditBoxes("", true);
             decryptionStatus = false;
             comboBox2.Enabled = true;
-            
+
+            var loadedBackup = Decrypt(Password, File.ReadAllBytes(CustomBackupDirectory + comboBox2.SelectedItem));
+            backupLastModified.Text = File.GetLastAccessTime(CustomBackupDirectory + comboBox2.SelectedItem).ToString();
+            backupCreditsLabel.Text = int_getDataFromSave(loadedBackup, Credits);
+            backupQuotaLabel.Text = int_getDataFromSave(loadedBackup, Quota);
+
 
         }
 
