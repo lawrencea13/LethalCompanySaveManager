@@ -21,7 +21,7 @@ namespace EZAudioSwitcher
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        public static string LocalLowPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).Replace("Roaming", "LocalLow");
+        public static string LocalLowPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\LocalLow\\";
         public string GameSavePath = LocalLowPath + "\\ZeekerssRBLX\\Lethal Company\\";
         public static string DefaultSaveDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\LCSM\\GameBackups\\";
         public string CustomBackupDirectory = DefaultSaveDirectory;
