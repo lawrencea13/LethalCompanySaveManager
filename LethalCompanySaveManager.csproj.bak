@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B02EAFB0-4F79-4B13-9930-D8C429C1769B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>LethalCompanySaveManager</RootNamespace>
+    <AssemblyName>LethalCompanySaveManager</AssemblyName>
+    <TargetFramework>net8.0</TargetFramework>
+	<LangVersion>latest</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FileHelpers, Version=3.5.2.0, Culture=neutral, PublicKeyToken=3e0c08d59cc3d657, processorArchitecture=MSIL">
+      <HintPath>packages\FileHelpers.3.5.2\lib\net45\FileHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=7.0.13.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Cryptography.Internal.7.0.13\lib\net462\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation, Version=7.0.13.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Cryptography.KeyDerivation.7.0.13\lib\net462\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.3.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>packages\DynamicLanguageRuntime.1.3.4\lib\net452\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.3.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>packages\DynamicLanguageRuntime.1.3.4\lib\net452\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.3.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>packages\DynamicLanguageRuntime.1.3.4\lib\net452\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SimpleCrypto, Version=26.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LCPlayer.cs" />
+    <Compile Include="LCSave.cs" />
+    <Compile Include="LCSecurity.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveInterface.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\abc.py" />
+    <Content Include="lib\aifc.py" />
+    <Content Include="lib\antigravity.py" />
+    <Content Include="lib\argparse.py" />
+    <Content Include="lib\ast.py" />
+    <Content Include="lib\asynchat.py" />
+    <Content Include="lib\asyncore.py" />
+    <Content Include="lib\base64.py" />
+    <Content Include="lib\bdb.py" />
+    <Content Include="lib\binhex.py" />
+    <Content Include="lib\bisect.py" />
+    <Content Include="lib\bz2.py" />
+    <Content Include="lib\calendar.py" />
+    <Content Include="lib\cgi.py" />
+    <Content Include="lib\cgitb.py" />
+    <Content Include="lib\chunk.py" />
+    <Content Include="lib\clrtype.py" />
+    <Content Include="lib\cmd.py" />
+    <Content Include="lib\code.py" />
+    <Content Include="lib\codecs.py" />
+    <Content Include="lib\codeop.py" />
+    <Content Include="lib\colorsys.py" />
+    <Content Include="lib\compileall.py" />
+    <Content Include="lib\configparser.py" />
+    <Content Include="lib\contextlib.py" />
+    <Content Include="lib\copy.py" />
+    <Content Include="lib\copyreg.py" />
+    <Content Include="lib\cProfile.py" />
+    <Content Include="lib\crypt.py" />
+    <Content Include="lib\csv.py" />
+    <Content Include="lib\datetime.py" />
+    <Content Include="lib\dbm\dumb.py" />
+    <Content Include="lib\dbm\gnu.py" />
+    <Content Include="lib\dbm\ndbm.py" />
+    <Content Include="lib\dbm\__init__.py" />
+    <Content Include="lib\decimal.py" />
+    <Content Include="lib\difflib.py" />
+    <Content Include="lib\dis.py" />
+    <Content Include="lib\doctest.py" />
+    <Content Include="lib\dummy_threading.py" />
+    <Content Include="lib\enum.py" />
+    <Content Include="lib\filecmp.py" />
+    <Content Include="lib\fileinput.py" />
+    <Content Include="lib\fnmatch.py" />
+    <Content Include="lib\formatter.py" />
+    <Content Include="lib\fractions.py" />
+    <Content Include="lib\ftplib.py" />
+    <Content Include="lib\functools.py" />
+    <Content Include="lib\genericpath.py" />
+    <Content Include="lib\getopt.py" />
+    <Content Include="lib\getpass.py" />
+    <Content Include="lib\gettext.py" />
+    <Content Include="lib\glob.py" />
+    <Content Include="lib\gzip.py" />
+    <Content Include="lib\hashlib.py" />
+    <Content Include="lib\heapq.py" />
+    <Content Include="lib\hmac.py" />
+    <Content Include="lib\html\entities.py" />
+    <Content Include="lib\html\parser.py" />
+    <Content Include="lib\html\__init__.py" />
+    <Content Include="lib\http\client.py" />
+    <Content Include="lib\http\cookiejar.py" />
+    <Content Include="lib\http\cookies.py" />
+    <Content Include="lib\http\server.py" />
+    <Content Include="lib\http\__init__.py" />
+    <Content Include="lib\imaplib.py" />
+    <Content Include="lib\imghdr.py" />
+    <Content Include="lib\imp.py" />
+    <Content Include="lib\inspect.py" />
+    <Content Include="lib\io.py" />
+    <Content Include="lib\ipaddress.py" />
+    <Content Include="lib\json\decoder.py" />
+    <Content Include="lib\json\encoder.py" />
+    <Content Include="lib\json\scanner.py" />
+    <Content Include="lib\json\tool.py" />
+    <Content Include="lib\json\__init__.py" />
+    <Content Include="lib\keyword.py" />
+    <Content Include="lib\linecache.py" />
+    <Content Include="lib\locale.py" />
+    <Content Include="lib\lzma.py" />
+    <Content Include="lib\macpath.py" />
+    <Content Include="lib\macurl2path.py" />
+    <Content Include="lib\mailbox.py" />
+    <Content Include="lib\mailcap.py" />
+    <Content Include="lib\mimetypes.py" />
+    <Content Include="lib\modulefinder.py" />
+    <Content Include="lib\netrc.py" />
+    <Content Include="lib\nntplib.py" />
+    <Content Include="lib\ntpath.py" />
+    <Content Include="lib\nturl2path.py" />
+    <Content Include="lib\numbers.py" />
+    <Content Include="lib\opcode.py" />
+    <Content Include="lib\operator.py" />
+    <Content Include="lib\optparse.py" />
+    <Content Include="lib\os.py" />
+    <Content Include="lib\pathlib.py" />
+    <Content Include="lib\pdb.py" />
+    <Content Include="lib\pickle.py" />
+    <Content Include="lib\pickletools.py" />
+    <Content Include="lib\pipes.py" />
+    <Content Include="lib\pkgutil.py" />
+    <Content Include="lib\platform.py" />
+    <Content Include="lib\plistlib.py" />
+    <Content Include="lib\poplib.py" />
+    <Content Include="lib\posixpath.py" />
+    <Content Include="lib\pprint.py" />
+    <Content Include="lib\profile.py" />
+    <Content Include="lib\pstats.py" />
+    <Content Include="lib\pty.py" />
+    <Content Include="lib\pyclbr.py" />
+    <Content Include="lib\pydoc.py" />
+    <Content Include="lib\py_compile.py" />
+    <Content Include="lib\queue.py" />
+    <Content Include="lib\quopri.py" />
+    <Content Include="lib\random.py" />
+    <Content Include="lib\re.py" />
+    <Content Include="lib\reprlib.py" />
+    <Content Include="lib\rlcompleter.py" />
+    <Content Include="lib\runpy.py" />
+    <Content Include="lib\sched.py" />
+    <Content Include="lib\selectors.py" />
+    <Content Include="lib\shelve.py" />
+    <Content Include="lib\shlex.py" />
+    <Content Include="lib\shutil.py" />
+    <Content Include="lib\site.py" />
+    <Content Include="lib\smtpd.py" />
+    <Content Include="lib\smtplib.py" />
+    <Content Include="lib\sndhdr.py" />
+    <Content Include="lib\socket.py" />
+    <Content Include="lib\socketserver.py" />
+    <Content Include="lib\sre_compile.py" />
+    <Content Include="lib\sre_constants.py" />
+    <Content Include="lib\sre_parse.py" />
+    <Content Include="lib\ssl.py" />
+    <Content Include="lib\stat.py" />
+    <Content Include="lib\statistics.py" />
+    <Content Include="lib\string.py" />
+    <Content Include="lib\stringprep.py" />
+    <Content Include="lib\struct.py" />
+    <Content Include="lib\subprocess.py" />
+    <Content Include="lib\sunau.py" />
+    <Content Include="lib\symbol.py" />
+    <Content Include="lib\symtable.py" />
+    <Content Include="lib\sysconfig.py" />
+    <Content Include="lib\tabnanny.py" />
+    <Content Include="lib\tarfile.py" />
+    <Content Include="lib\telnetlib.py" />
+    <Content Include="lib\tempfile.py" />
+    <Content Include="lib\textwrap.py" />
+    <Content Include="lib\this.py" />
+    <Content Include="lib\threading.py" />
+    <Content Include="lib\timeit.py" />
+    <Content Include="lib\token.py" />
+    <Content Include="lib\tokenize.py" />
+    <Content Include="lib\trace.py" />
+    <Content Include="lib\traceback.py" />
+    <Content Include="lib\tracemalloc.py" />
+    <Content Include="lib\tty.py" />
+    <Content Include="lib\turtle.py" />
+    <Content Include="lib\types.py" />
+    <Content Include="lib\typing.py" />
+    <Content Include="lib\uu.py" />
+    <Content Include="lib\uuid.py" />
+    <Content Include="lib\venv\__init__.py" />
+    <Content Include="lib\venv\__main__.py" />
+    <Content Include="lib\warnings.py" />
+    <Content Include="lib\wave.py" />
+    <Content Include="lib\weakref.py" />
+    <Content Include="lib\webbrowser.py" />
+    <Content Include="lib\wpf.py" />
+    <Content Include="lib\xdrlib.py" />
+    <Content Include="lib\xml\__init__.py" />
+    <Content Include="lib\zipfile.py" />
+    <Content Include="lib\_bootlocale.py" />
+    <Content Include="lib\_collections_abc.py" />
+    <Content Include="lib\_compat_pickle.py" />
+    <Content Include="lib\_dummy_thread.py" />
+    <Content Include="lib\_markupbase.py" />
+    <Content Include="lib\_osx_support.py" />
+    <Content Include="lib\_pyio.py" />
+    <Content Include="lib\_sitebuiltins.py" />
+    <Content Include="lib\_strptime.py" />
+    <Content Include="lib\_threading_local.py" />
+    <Content Include="lib\_weakrefset.py" />
+    <Content Include="lib\__future__.py" />
+    <Content Include="lib\__phello__.foo.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\email\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

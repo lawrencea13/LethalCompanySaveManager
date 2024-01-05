@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EZAudioSwitcher
+namespace LethalCompanySaveManager
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace EZAudioSwitcher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new LCSE());
         }
     }
 }
