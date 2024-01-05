@@ -3,6 +3,7 @@
 </p>
 
 # LethalCompanySaveManager
+Major thanks to [@Pickendorf](https://github.com/Pickendorf) for the recent overhaul!
 
 Save editor for the game [Lethal Company]([https://store.steampowered.com/app/1966720/Lethal_Company/]).
 
